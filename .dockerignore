@@ -1,0 +1,15 @@
+node_modules/
+*.log
+*.tmp
+dist/
+.DS_Store
+Thumbs.db
+.env
+.git/
+.gitignore
+Dockerfile
+.ci/
+.circleci/
+npm-debug.log
+.vscode/
+.idea/

@@ -1,0 +1,59 @@
+services:
+    mongo:
+        networks:
+            - my-network
+        container_name: mongo_db
+        ports:
+            - 27017:27017
+        environment:
+            - MONGO_INITDB_ROOT_USERNAME=/run/secrets/mongo_user_secret
+            - MONGO_INITDB_ROOT_PASSWORD=/run/secrets/mongo_password_secret
+        image: mongo
+        
+        secrets:
+          - mongo_user_secret
+          - mongo_password_secret
+        volumes:
+          - ~/Desktop/project/test/data:/data/db
+
+    mongo-express:
+        container_name: mongo_express
+        networks:
+            - my-network
+        ports:
+            - 8081:8081
+        environment:
+            - ME_CONFIG_MONGODB_ADMINUSERNAME=/run/secrets/mongo_user_secret
+            - ME_CONFIG_MONGODB_ADMINPASSWORD=/run/secrets/mongo_password_secret
+            - ME_CONFIG_MONGODB_URL=mongodb://mongoadmin:secret@mongo_db:27017/
+            # - ME_CONFIG_MONGODB_URL=/run/secrets/mongo_url_secret.txt
+
+        secrets:
+          - mongo_user_secret
+          - mongo_password_secret
+
+        image: mongo-express
+    
+    node_app:
+        container_name: node_app
+        build: 
+            context: docker-testapp
+        restart: always
+        ports:
+          - 5050:5050
+        env_file:
+            - ./docker-testapp/.env
+        links:
+            - mongo
+        networks:
+            - my-network
+
+networks:
+  my-network:
+    external: true
+    name: my-network
+secrets:
+  mongo_user_secret:
+    file: ./secrets/mongo_user_secret.txt
+  mongo_password_secret:
+    file: ./secrets/mongo_password_secret.txt
