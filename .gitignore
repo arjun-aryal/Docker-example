@@ -1,6 +1,10 @@
 # Node modules directory
 node_modules/
 
+# secrets
+mongo_password_secret.txt
+mongo_user_secret.txt
+
 # Logs
 logs/
 *.log

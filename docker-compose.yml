@@ -26,7 +26,6 @@ services:
             - ME_CONFIG_MONGODB_ADMINUSERNAME=/run/secrets/mongo_user_secret
             - ME_CONFIG_MONGODB_ADMINPASSWORD=/run/secrets/mongo_password_secret
             - ME_CONFIG_MONGODB_URL=mongodb://mongoadmin:secret@mongo_db:27017/
-            # - ME_CONFIG_MONGODB_URL=/run/secrets/mongo_url_secret.txt
 
         secrets:
           - mongo_user_secret
