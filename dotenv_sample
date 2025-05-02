@@ -1,1 +1,0 @@
-MONGO_URL = "mongodb://<username>:<creds>@mongo_db:27017
